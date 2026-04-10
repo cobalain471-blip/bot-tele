@@ -1,11 +1,11 @@
 const TelegramBot = require("node-telegram-bot-api");
 
-const token = "ISI_TOKEN_KAMU";
+const token = "8296936814:AAHl8Fmr9qCjCwDL--to-Aab1wSSZdncDCA";
 const bot = new TelegramBot(token, { polling: true });
 
-const ADMIN_ID = 123456789;
-const QRIS = "LINK_QRIS_KAMU";
-const LINK_KONTEN = "https://linkkamu.com";
+const ADMIN_ID = 6677303168;
+const QRIS = "https://ibb.co.com/WvVKrZJ4";
+const LINK_KONTEN = "https://tempatbokep.com/";
 
 // anti spam
 const userState = {};
@@ -31,13 +31,13 @@ bot.on("callback_query", async (q) => {
 
   try {
     if (q.data === "lihat") {
-      await bot.sendVideo(id, "https://t.me/channel/1");
+      await bot.sendVideo(id, "https://t.me/c/3916601448/4");
       await new Promise(r => setTimeout(r, 1000));
 
-      await bot.sendVideo(id, "https://t.me/channel/2");
+      await bot.sendVideo(id, "https://t.me/c/3916601448/3");
       await new Promise(r => setTimeout(r, 1000));
 
-      await bot.sendVideo(id, "https://t.me/channel/3");
+      await bot.sendVideo(id, "https://t.me/c/3916601448/2");
 
       await bot.sendMessage(id, "🔥 Mau lanjut full video?", {
         reply_markup: {
