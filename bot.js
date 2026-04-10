@@ -3,8 +3,8 @@ const TelegramBot = require("node-telegram-bot-api");
 const token = "8296936814:AAHl8Fmr9qCjCwDL--to-Aab1wSSZdncDCA";
 const ADMIN_ID = 6677303168;
 
-// link konten
-const LINK_KONTEN = "https://tempatbokep.com/";
+const LINK_KONTEN = "https://linkkamu.com";
+const QRIS = "https://ibb.co.com/WvVKrZJ4";
 
 const bot = new TelegramBot(token, { polling: true });
 
@@ -27,9 +27,8 @@ bot.onText(/\/start/, (msg) => {
 bot.on("callback_query", async (q) => {
   const id = q.message.chat.id;
 
-  // 🔥 STEP 1: KIRIM 3 VIDEO PREVIEW
+  // STEP 1: 3 VIDEO
   if (q.data === "lihat") {
-
     await bot.sendVideo(id, "LINK_VIDEO_1", {
       caption: "🔥 Video 1 (preview)"
     });
@@ -39,12 +38,10 @@ bot.on("callback_query", async (q) => {
     });
 
     await bot.sendVideo(id, "LINK_VIDEO_3", {
-      caption:
-        "⚠️ Video 3 (terakhir sebelum full 😳)\n\nMau lanjut full videonya?"
+      caption: "⚠️ Video terakhir 😳"
     });
 
-    // tombol lanjut
-    bot.sendMessage(id, "👇 Klik di bawah untuk lanjut", {
+    bot.sendMessage(id, "👇 Mau lanjut full video?", {
       reply_markup: {
         inline_keyboard: [
           [{ text: "▶️ Lanjutkan Video", callback_data: "lanjut" }]
@@ -53,26 +50,15 @@ bot.on("callback_query", async (q) => {
     });
   }
 
-  // 💳 STEP 2: TAMPILKAN QRIS
+  // STEP 2: QRIS
   if (q.data === "lanjut") {
-    bot.sendPhoto(id, "https://ibb.co.com/WvVKrZJ4", {
+    bot.sendPhoto(id, QRIS, {
       caption:
-        "🔥 Untuk membuka semua video full 😈\n\n💰 Cukup bayar Rp5.000\n\n🎬 Akses banyak video sekaligus\n\n📸 Kirim bukti setelah bayar"
+        "🔥 Buka semua video full 😈\n\n💰 Bayar Rp5.000\n\n📸 Kirim bukti setelah bayar"
     });
   }
 
-  // ✅ APPROVE (BIAR TETAP JALAN)
-  if (q.data.startsWith("approve_")) {
-    const userId = q.data.split("_")[1];
-
-    bot.sendMessage(
-      userId,
-      "🔓 Pembayaran diterima!\n\nAkses semua video di sini:\nhttps://linkkamu.com"
-    );
-
-    bot.sendMessage(ADMIN_ID, "✅ User sudah di-approve");
-  }
-});
+  // APPROVE
   if (q.data.startsWith("approve_")) {
     const userId = q.data.split("_")[1];
 
@@ -85,13 +71,12 @@ bot.on("callback_query", async (q) => {
   }
 });
 
-// TERIMA FOTO (BUKTI BAYAR)
+// TERIMA FOTO
 bot.on("photo", (msg) => {
   const userId = msg.chat.id;
 
-  // kirim ke admin
   bot.sendPhoto(ADMIN_ID, msg.photo[msg.photo.length - 1].file_id, {
-    caption: "Bukti bayar dari user: " + userId,
+    caption: "Bukti bayar dari: " + userId,
     reply_markup: {
       inline_keyboard: [
         [
@@ -104,7 +89,7 @@ bot.on("photo", (msg) => {
     }
   });
 
-  bot.sendMessage(userId, "📩 Bukti diterima, tunggu konfirmasi admin");
+  bot.sendMessage(userId, "📩 Bukti diterima, tunggu admin");
 });
 
-console.log("Bot jualan PRO jalan 🚀");
+console.log("Bot siap cuan 🚀");
