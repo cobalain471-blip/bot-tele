@@ -1,6 +1,10 @@
 const TelegramBot = require("node-telegram-bot-api");
 
-const token = "8296936814:AAHl8Fmr9qCjCwDL--to-Aab1wSSZdncDCA";
+const token = "ISI_TOKEN_KAMU";
+const ADMIN_ID = 123456789;
+
+// link konten
+const LINK_KONTEN = "https://linkkamu.com";
 
 const bot = new TelegramBot(token, { polling: true });
 
@@ -26,23 +30,42 @@ bot.on("callback_query", (q) => {
   if (q.data === "lihat") {
     bot.sendMessage(
       id,
-      "💰 Untuk membuka konten bayar Rp5.000\n\nKlik jika sudah bayar",
-      {
-        reply_markup: {
-          inline_keyboard: [
-            [{ text: "✅ Saya sudah bayar", callback_data: "bayar" }]
-          ]
-        }
-      }
+      "💰 Harga Rp5.000\n\nSilakan transfer lalu kirim bukti (screenshot) ke bot ini 📸"
     );
   }
 
-  if (q.data === "bayar") {
+  if (q.data.startsWith("approve_")) {
+    const userId = q.data.split("_")[1];
+
     bot.sendMessage(
-      id,
-      "🔓 Ini link konten kamu:\nhttps://linkkamu.com"
+      userId,
+      "🔓 Pembayaran diterima!\n\nAkses di sini:\n" + LINK_KONTEN
     );
+
+    bot.sendMessage(ADMIN_ID, "✅ User sudah di-approve");
   }
 });
 
-console.log("Bot aktif 🚀");
+// TERIMA FOTO (BUKTI BAYAR)
+bot.on("photo", (msg) => {
+  const userId = msg.chat.id;
+
+  // kirim ke admin
+  bot.sendPhoto(ADMIN_ID, msg.photo[msg.photo.length - 1].file_id, {
+    caption: "Bukti bayar dari user: " + userId,
+    reply_markup: {
+      inline_keyboard: [
+        [
+          {
+            text: "✅ Approve",
+            callback_data: "approve_" + userId
+          }
+        ]
+      ]
+    }
+  });
+
+  bot.sendMessage(userId, "📩 Bukti diterima, tunggu konfirmasi admin");
+});
+
+console.log("Bot jualan PRO jalan 🚀");
