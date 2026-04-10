@@ -28,10 +28,10 @@ bot.on("callback_query", (q) => {
   const id = q.message.chat.id;
 
   if (q.data === "lihat") {
-    bot.sendMessage(
-      id,
-      "💰 Harga Rp5.000\n\nSilakan transfer lalu kirim bukti (screenshot) ke bot ini 📸"
-    );
+  bot.sendPhoto(id, "https://ibb.co.com/WvVKrZJ4", {
+    caption:
+      "💰 Harga Rp5.000\n\nScan QR di atas untuk bayar\n\nSetelah bayar kirim bukti ya 📸"
+  });
   }
 
   if (q.data.startsWith("approve_")) {
