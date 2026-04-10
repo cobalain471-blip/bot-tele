@@ -24,16 +24,55 @@ bot.onText(/\/start/, (msg) => {
 });
 
 // BUTTON
-bot.on("callback_query", (q) => {
+bot.on("callback_query", async (q) => {
   const id = q.message.chat.id;
 
+  // 🔥 STEP 1: KIRIM 3 VIDEO PREVIEW
   if (q.data === "lihat") {
-  bot.sendPhoto(id, "https://ibb.co.com/WvVKrZJ4", {
-    caption:
-      "💰 Harga Rp5.000\n\nScan QR di atas untuk bayar\n\nSetelah bayar kirim bukti ya 📸"
-  });
+
+    await bot.sendVideo(id, "LINK_VIDEO_1", {
+      caption: "🔥 Video 1 (preview)"
+    });
+
+    await bot.sendVideo(id, "LINK_VIDEO_2", {
+      caption: "😈 Video 2 (makin panas)"
+    });
+
+    await bot.sendVideo(id, "LINK_VIDEO_3", {
+      caption:
+        "⚠️ Video 3 (terakhir sebelum full 😳)\n\nMau lanjut full videonya?"
+    });
+
+    // tombol lanjut
+    bot.sendMessage(id, "👇 Klik di bawah untuk lanjut", {
+      reply_markup: {
+        inline_keyboard: [
+          [{ text: "▶️ Lanjutkan Video", callback_data: "lanjut" }]
+        ]
+      }
+    });
   }
 
+  // 💳 STEP 2: TAMPILKAN QRIS
+  if (q.data === "lanjut") {
+    bot.sendPhoto(id, "https://ibb.co.com/WvVKrZJ4", {
+      caption:
+        "🔥 Untuk membuka semua video full 😈\n\n💰 Cukup bayar Rp5.000\n\n🎬 Akses banyak video sekaligus\n\n📸 Kirim bukti setelah bayar"
+    });
+  }
+
+  // ✅ APPROVE (BIAR TETAP JALAN)
+  if (q.data.startsWith("approve_")) {
+    const userId = q.data.split("_")[1];
+
+    bot.sendMessage(
+      userId,
+      "🔓 Pembayaran diterima!\n\nAkses semua video di sini:\nhttps://linkkamu.com"
+    );
+
+    bot.sendMessage(ADMIN_ID, "✅ User sudah di-approve");
+  }
+});
   if (q.data.startsWith("approve_")) {
     const userId = q.data.split("_")[1];
 
