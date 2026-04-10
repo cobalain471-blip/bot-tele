@@ -1,12 +1,14 @@
 const TelegramBot = require("node-telegram-bot-api");
 
-const token = "8296936814:AAHl8Fmr9qCjCwDL--to-Aab1wSSZdncDCA";
-const ADMIN_ID = 6677303168;
-
-const LINK_KONTEN = "https://tempatbokep.com/";
-const QRIS = "https://ibb.co.com/WvVKrZJ4";
-
+const token = "ISI_TOKEN_KAMU";
 const bot = new TelegramBot(token, { polling: true });
+
+const ADMIN_ID = 123456789;
+const QRIS = "LINK_QRIS_KAMU";
+const LINK_KONTEN = "https://linkkamu.com";
+
+// anti spam
+const userState = {};
 
 // START
 bot.onText(/\/start/, (msg) => {
@@ -23,56 +25,60 @@ bot.onText(/\/start/, (msg) => {
 bot.on("callback_query", async (q) => {
   const id = q.message.chat.id;
 
-  // 🎬 STEP 1: 3 VIDEO
-  if (q.data === "lihat") {
-    await bot.sendVideo(id, "https://t.me/c/3916601448/2", {
-      caption: "🔥 Video 1"
-    });
+  // ❌ kalau lagi proses, stop
+  if (userState[id]) return;
+  userState[id] = true;
 
-    await bot.sendVideo(id, "https://t.me/c/3916601448/3", {
-      caption: "😈 Video 2"
-    });
+  try {
+    if (q.data === "lihat") {
+      await bot.sendVideo(id, "https://t.me/channel/1");
+      await new Promise(r => setTimeout(r, 1000));
 
-    await bot.sendVideo(id, "https://t.me/c/3916601448/4", {
-      caption: "⚠️ Video terakhir 😳 (full lebih gila)"
-    });
+      await bot.sendVideo(id, "https://t.me/channel/2");
+      await new Promise(r => setTimeout(r, 1000));
 
-    bot.sendMessage(id, "Mau lanjut full videonya?", {
-      reply_markup: {
-        inline_keyboard: [
-          [{ text: "▶️ Lanjutkan", callback_data: "lanjut" }]
-        ]
-      }
-    });
+      await bot.sendVideo(id, "https://t.me/channel/3");
+
+      await bot.sendMessage(id, "🔥 Mau lanjut full video?", {
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: "▶️ Lanjutkan", callback_data: "lanjut" }]
+          ]
+        }
+      });
+    }
+
+    if (q.data === "lanjut") {
+      await bot.sendPhoto(id, QRIS, {
+        caption:
+          "🔥 Buka semua video full 😈\n\n💰 Bayar Rp5.000\n\n📸 Kirim bukti pembayaran"
+      });
+    }
+
+    if (q.data.startsWith("approve_")) {
+      const userId = q.data.split("_")[1];
+
+      await bot.sendMessage(
+        userId,
+        "🔓 Pembayaran diterima!\n\nAkses:\n" + LINK_KONTEN
+      );
+    }
+  } catch (e) {
+    console.log("ERROR:", e.message);
   }
 
-  // 💳 STEP 2: QRIS
-  else if (q.data === "lanjut") {
-    bot.sendPhoto(id, QRIS, {
-      caption:
-        "🔥 Buka semua video full 😈\n\n💰 Bayar Rp5.000\n\n📸 Kirim bukti pembayaran"
-    });
-  }
-
-  // ✅ APPROVE
-  else if (q.data.startsWith("approve_")) {
-    const userId = q.data.split("_")[1];
-
-    bot.sendMessage(
-      userId,
-      "🔓 Pembayaran diterima!\n\nAkses semua video:\n" + LINK_KONTEN
-    );
-
-    bot.sendMessage(ADMIN_ID, "✅ User berhasil di-approve");
-  }
+  // reset biar bisa klik lagi
+  setTimeout(() => {
+    userState[id] = false;
+  }, 3000);
 });
 
-// 📸 TERIMA BUKTI
+// TERIMA BUKTI
 bot.on("photo", (msg) => {
   const userId = msg.chat.id;
 
   bot.sendPhoto(ADMIN_ID, msg.photo[msg.photo.length - 1].file_id, {
-    caption: "Bukti dari user: " + userId,
+    caption: "User: " + userId,
     reply_markup: {
       inline_keyboard: [
         [
@@ -85,7 +91,7 @@ bot.on("photo", (msg) => {
     }
   });
 
-  bot.sendMessage(userId, "⏳ Menunggu konfirmasi admin...");
+  bot.sendMessage(userId, "⏳ Menunggu konfirmasi...");
 });
 
-console.log("Bot cuan siap 🚀");
+console.log("Bot aman jalan 🚀");
