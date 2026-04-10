@@ -1,10 +1,10 @@
 const TelegramBot = require("node-telegram-bot-api");
 
-const token = "ISI_TOKEN_KAMU";
-const ADMIN_ID = 123456789;
+const token = "8296936814:AAHl8Fmr9qCjCwDL--to-Aab1wSSZdncDCA";
+const ADMIN_ID = 6677303168;
 
 // link konten
-const LINK_KONTEN = "https://linkkamu.com";
+const LINK_KONTEN = "https://tempatbokep.com/";
 
 const bot = new TelegramBot(token, { polling: true });
 
