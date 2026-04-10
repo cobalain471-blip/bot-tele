@@ -1,10 +1,10 @@
 const TelegramBot = require("node-telegram-bot-api");
 
 const token = "8296936814:AAHl8Fmr9qCjCwDL--to-Aab1wSSZdncDCA";
-const ADMIN_ID = 123456789;
+const ADMIN_ID = 6677303168;
 
-const LINK_KONTEN = "https://linkkamu.com";
-const QRIS = "LINK_QRIS_KAMU";
+const LINK_KONTEN = "https://tempatbokep.com/";
+const QRIS = "https://ibb.co.com/WvVKrZJ4";
 
 const bot = new TelegramBot(token, { polling: true });
 
