@@ -1,6 +1,6 @@
 const TelegramBot = require("node-telegram-bot-api");
 
-const token = "ISI_TOKEN_KAMU";
+const token = "8296936814:AAHl8Fmr9qCjCwDL--to-Aab1wSSZdncDCA";
 const ADMIN_ID = 123456789;
 
 const LINK_KONTEN = "https://linkkamu.com";
