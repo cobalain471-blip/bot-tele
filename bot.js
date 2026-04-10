@@ -25,15 +25,15 @@ bot.on("callback_query", async (q) => {
 
   // 🎬 STEP 1: 3 VIDEO
   if (q.data === "lihat") {
-    await bot.sendVideo(id, "LINK_VIDEO_1", {
+    await bot.sendVideo(id, "https://t.me/c/3916601448/2", {
       caption: "🔥 Video 1"
     });
 
-    await bot.sendVideo(id, "LINK_VIDEO_2", {
+    await bot.sendVideo(id, "https://t.me/c/3916601448/3", {
       caption: "😈 Video 2"
     });
 
-    await bot.sendVideo(id, "LINK_VIDEO_3", {
+    await bot.sendVideo(id, "https://t.me/c/3916601448/4", {
       caption: "⚠️ Video terakhir 😳 (full lebih gila)"
     });
 
