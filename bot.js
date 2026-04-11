@@ -37,7 +37,7 @@ bot.on("callback_query", async (q) => {
       await bot.sendVideo(id, "https://t.me/videopanas46/3");
       await new Promise(r => setTimeout(r, 1000));
 
-      await bot.sendVideo(id, "https://t.me/videopanas46/2");
+      await bot.sendVideo(id, "https://t.me/videopanas46/4");
 
       await bot.sendMessage(id, "🔥 Mau lanjut full video?", {
         reply_markup: {
