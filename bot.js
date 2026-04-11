@@ -31,13 +31,13 @@ bot.on("callback_query", async (q) => {
 
   try {
     if (q.data === "lihat") {
-      await bot.sendVideo(id, "https://t.me/c/3916601448/4");
+      await bot.sendVideo(id, "https://t.me/videopanas46/2?single");
       await new Promise(r => setTimeout(r, 1000));
 
-      await bot.sendVideo(id, "https://t.me/c/3916601448/3");
+      await bot.sendVideo(id, "https://t.me/videopanas46/3");
       await new Promise(r => setTimeout(r, 1000));
 
-      await bot.sendVideo(id, "https://t.me/c/3916601448/2");
+      await bot.sendVideo(id, "https://t.me/videopanas46/2");
 
       await bot.sendMessage(id, "🔥 Mau lanjut full video?", {
         reply_markup: {
